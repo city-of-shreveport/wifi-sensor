@@ -1,0 +1,14 @@
+[Unit]
+Description=Wifi Mapper
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/sensor_setup
+WorkingDirectory=/home/pi/
+StandardOutput=inherit
+StandardError=inherit
+Restart=no
+User=root
+
+[Install]
+WantedBy=multi-user.target

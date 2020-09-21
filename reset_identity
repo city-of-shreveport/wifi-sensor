@@ -1,0 +1,4 @@
+#!/bin/bash
+
+sudo echo "raspberrypi" > /etc/hostname
+sudo reboot

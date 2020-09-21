@@ -1,0 +1,58 @@
+#!/bin/bash
+
+MYHOSTNAME=$(cat /etc/hostname)
+
+# Ensure we get our environment variables from this installation
+source /home/pi/env
+
+echo "Checking Hostname: $MYHOSTNAME"
+if [ "$MYHOSTNAME" = "raspberrypi" ]; then
+  echo "Looks like we need a new hostname"
+  NEW_UUID=$(uuidgen) 
+  echo "Changing hostname to $NEW_UUID"
+
+  echo "$NEW_UUID" > /etc/hostname
+  echo "127.0.0.1 $NEW_UUID" >> /etc/hosts
+
+  echo "Removing default image ZeroTier identity"
+  rm -rf /var/lib/zerotier-one/identity.*
+
+  echo "Rebooting..."
+  reboot
+else
+  echo "Joining Zero Tier Network"
+  zerotier-cli join $ZEROTIER_NETWORK
+
+  echo "Zipping all wifi data"
+  filename=$(date '+%Y-%m-%d-%s')
+  tar -zcvf "/home/pi/zipped/$filename-$HOSTNAME.tar.gz" /home/pi/kismet
+
+  echo "Removing original data..."
+  rm /home/pi/kismet/*
+
+  echo "Attempting to upload..."
+  echo 'admin@10.147.19.250:~/garbage_truck_wifi_scans/' | parallel -t --retries 5 --delay 30 sudo -u pi scp "/home/pi/zipped/$filename-$HOSTNAME.tar.gz" 
+
+  echo "Upload script completed. Uploaded file: $filename-$HOSTNAME"
+  
+  echo "Entering Monitor Mode"
+
+  echo "Bringing wlan0 down"
+  sudo ifconfig wlan0 down
+
+  echo "Creating mon0"
+  sudo iw phy phy0 interface add mon0 type monitor
+
+  echo "Bringing mon0 up"
+  sudo ifconfig mon0 up
+
+  echo "Waiting 10 seconds for mon0 to activate"
+  sleep 10
+
+  echo "Starting Kismet service."
+  sudo service kismet start
+
+  echo "Scanning..."
+
+fi
+
