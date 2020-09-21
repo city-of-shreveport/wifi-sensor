@@ -1,1 +1,25 @@
 #!/bin/bash
+
+# This file is meant to be run on a fresh installation of 
+# raspbian to setup a wifi mapping sensor image from scratch
+
+# It is not intelligent - it will run each command below without
+# checking if it has already done it before
+
+echo "Installing re4son kernel"
+wget -O re4son-kernel_current.tar.xz https://re4son-kernel.com/download/re4son-kernel-current/
+tar -xvf re4son-kernel_current.tar.xz
+cd re4son-kernel_*
+sudo ./install.sh
+
+echo "Installing Kismet, SQLite3, UUIDgen"
+wget -O - https://www.kismetwireless.net/repos/kismet-release.gpg.key | sudo apt-key add -
+
+sudo apt-get update
+
+sudo apt install kismet sqlite3 uuidgen
+
+echo "Installing ZeroTier"
+curl -s https://install.zerotier.com | sudo bash
+
+echo "Installation complete. See http://google.com for how to turn this into a compressed .img file for mass install"
