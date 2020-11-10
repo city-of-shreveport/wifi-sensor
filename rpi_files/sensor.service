@@ -3,7 +3,7 @@ Description=Wifi Mapper
 After=network.target
 
 [Service]
-ExecStart=/usr/local/bin/sensor_setup
+ExecStart=/usr/local/bin/sensor_logic
 WorkingDirectory=/home/pi/
 StandardOutput=inherit
 StandardError=inherit

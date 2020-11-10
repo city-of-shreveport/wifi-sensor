@@ -22,4 +22,6 @@ sudo apt install kismet sqlite3 uuidgen
 echo "Installing ZeroTier"
 curl -s https://install.zerotier.com | sudo bash
 
+# copy scripts, do the rest of the work here
+
 echo "Installation complete. See http://google.com for how to turn this into a compressed .img file for mass install"

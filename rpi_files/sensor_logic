@@ -1,5 +1,4 @@
 #!/bin/bash
-
 MYHOSTNAME=$(cat /etc/hostname)
 
 # Ensure we get our environment variables from this installation
@@ -7,6 +6,7 @@ source /home/pi/env
 
 echo "Checking Hostname: $MYHOSTNAME"
 if [ "$MYHOSTNAME" = "raspberrypi" ]; then
+  # TODO: give human readable names
   echo "Looks like we need a new hostname"
   NEW_UUID=$(uuidgen) 
   echo "Changing hostname to $NEW_UUID"
@@ -31,7 +31,7 @@ else
   rm /home/pi/kismet/*
 
   echo "Attempting to upload..."
-  echo 'admin@10.147.19.250:~/garbage_truck_wifi_scans/' | parallel -t --retries 5 --delay 30 sudo -u pi scp "/home/pi/zipped/$filename-$HOSTNAME.tar.gz" 
+  echo "$SCP_USER@$SCP_SERVER:$SCP_DIRECTORY" | parallel -t --retries 5 --delay 30 sudo -u pi scp "/home/pi/zipped/$filename-$HOSTNAME.tar.gz" 
 
   echo "Upload script completed. Uploaded file: $filename-$HOSTNAME"
   
