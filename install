@@ -6,6 +6,15 @@
 # It is not intelligent - it will run each command below without
 # checking if it has already done it before
 
+# HIGH LEVEL OVERVIEW
+# 1. install prerequisites
+# 2. verify prerequisites are installed
+# 3. copy kismet config into /etc/kismet/
+# 4. copy sensor_logic script into /home/pi/
+# 5. copy env file into source /home/pi/env
+# 6. install sensor_logic service
+# 7. enable sensor_logic service at bootup
+
 echo "Installing re4son kernel"
 wget -O re4son-kernel_current.tar.xz https://re4son-kernel.com/download/re4son-kernel-current/
 tar -xvf re4son-kernel_current.tar.xz
