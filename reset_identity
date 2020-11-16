@@ -1,5 +1,7 @@
 #!/bin/bash
+
 # Quick script to reset a device by changing hostname
-# back to default and rejoining zerotier and such
+# back to default and rejoining zerotier and such.
+
 sudo echo "raspberrypi" > /etc/hostname
 sudo reboot

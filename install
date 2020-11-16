@@ -1,36 +1,40 @@
 #!/bin/bash
 
 # This file is meant to be run on a fresh installation of 
-# raspbian to setup a wifi mapping sensor image from scratch
+# raspbian to setup a wifi mapping sensor image from scratch.
 
-# It is not intelligent - it will run each command below without
-# checking if it has already done it before
+echo "Copying env file into /home/pi/env..."
+cp env /home/pi/env
 
-# HIGH LEVEL OVERVIEW
-# 1. install prerequisites
-# 2. verify prerequisites are installed
-# 3. copy kismet config into /etc/kismet/
-# 4. copy sensor_logic script into /home/pi/
-# 5. copy env file into source /home/pi/env
-# 6. install sensor_logic service
-# 7. enable sensor_logic service at bootup
+echo "Copying sensor_logic file into /home/pi/sensor_logic..."
+cp sensor_logic /home/pi/sensor_logic
 
-echo "Installing re4son kernel"
-wget -O re4son-kernel_current.tar.xz https://re4son-kernel.com/download/re4son-kernel-current/
-tar -xvf re4son-kernel_current.tar.xz
-cd re4son-kernel_*
-sudo ./install.sh
+echo "Copying source files..."
+sudo cp sources.list.d/kismet.list /etc/apt/sources.list.d/kismet.list
+sudo cp sources.list.d/raspi.list /etc/apt/sources.list.d/raspi.list
+sudo cp sources.list.d/zerotier.list /etc/apt/sources.list.d/zerotier.list
 
-echo "Installing Kismet, SQLite3, UUIDgen"
+echo "Installing Kismet, SQLite3, and UUIDgen..."
 wget -O - https://www.kismetwireless.net/repos/kismet-release.gpg.key | sudo apt-key add -
+sudo apt update
+sudo apt install kismet sqlite3 uuid-runtime
 
-sudo apt-get update
+echo "Copying kismet files into /etc/kismet/..."
+sudo mkdir -p /etc/kismet/
+sudo cp kismet/* /etc/kismet/
 
-sudo apt install kismet sqlite3 uuidgen
-
-echo "Installing ZeroTier"
+echo "Installing ZeroTier..."
 curl -s https://install.zerotier.com | sudo bash
 
-# copy scripts, do the rest of the work here
+echo "Installing re4son kernel..."
+wget -O /home/pi/re4son-kernel_current.tar.xz https://re4son-kernel.com/download/re4son-kernel-current/
+tar -xvf /home/pi/re4son-kernel_current.tar.xz --directory /home/pi/
+cd /home/pi/re4son-kernel_4*
+sudo ./install.sh
 
-echo "Installation complete. See http://google.com for how to turn this into a compressed .img file for mass install"
+echo "Installing sensor.service..."
+sudo cp sensor.service /etc/systemd/system/sensor.service
+sudo systemctl enable sensor.service
+
+echo "Installation complete. Please reboot your system."
+echo "See https://google.com for how to turn this into a compressed '.img' file for mass installation."
