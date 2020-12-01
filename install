@@ -12,6 +12,7 @@ cp sensor_logic /home/pi/sensor_logic
 echo "Copying source files..."
 sudo cp sources.list.d/kismet.list /etc/apt/sources.list.d/kismet.list
 sudo cp sources.list.d/raspi.list /etc/apt/sources.list.d/raspi.list
+sudo cp sources.list.d/re4son.list /etc/apt/sources.list.d/re4son.list
 sudo cp sources.list.d/zerotier.list /etc/apt/sources.list.d/zerotier.list
 
 echo "Installing Kismet, SQLite3, and UUIDgen..."
@@ -26,15 +27,18 @@ sudo cp kismet/* /etc/kismet/
 echo "Installing ZeroTier..."
 curl -s https://install.zerotier.com | sudo bash
 
-echo "Installing re4son kernel..."
-wget -O /home/pi/re4son-kernel_current.tar.xz https://re4son-kernel.com/download/re4son-kernel-current/
-tar -xvf /home/pi/re4son-kernel_current.tar.xz --directory /home/pi/
-cd /home/pi/re4son-kernel_4*
-sudo ./install.sh
-
 echo "Installing sensor.service..."
 sudo cp sensor.service /etc/systemd/system/sensor.service
 sudo systemctl enable sensor.service
+
+echo "Installing re4son kernel..."
+wget -O - https://re4son-kernel.com/keys/http/archive-key.asc | sudo apt-key add -
+sudo apt update
+sudo apt upgrade
+sudo apt install -y \
+  kalipi-kernel kalipi-bootloader kalipi-re4son-firmware \
+  kalipi-kernel-headers libraspberrypi0 libraspberrypi-dev \
+  libraspberrypi-doc libraspberrypi-bin
 
 echo "Installation complete. Please reboot your system."
 echo "See https://google.com for how to turn this into a compressed '.img' file for mass installation."
