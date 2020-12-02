@@ -18,8 +18,20 @@ mode and begin listening for SSIDs.
 See kismet/kismet_logging.conf for specific instructions we give to Kismet.
 In our configuration of this repository, we log ONLY the SSIDs of Access Points.
 
+
+
+# Prerequisites
+
+* SCP server backend.
+* Pi 3B+ / Pi 4 flashed with Raspberry Pi OS Lite.
+* ZeroTier Account.
+* Minimal technical knowledge on Linux systems.
+
 # Installation
-1. Create a file named `env` in the root of this repo using the env.sample as a reference and fill in your details.
-2. Run the `install` script and select the default option for any post-install prompts.
-3. Once the installation is complete reboot the system.
-4. Check the status of the sensor.service by running `sudo systemctl status sensor.service`
+
+1. Clone the repo: `git clone https://github.com/city-of-shreveport/wifi-sensor.git`
+2. Create a file named `env` in the root of this repo using the env.sample as a reference and fill in your details.
+3. Run the `install` script and select the default option for any post-install prompts.
+4. Once the installation is complete reboot the system.
+5. Check the status of the sensor.service by running `sudo systemctl status sensor.service`
+
