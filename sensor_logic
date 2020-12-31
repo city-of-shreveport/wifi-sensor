@@ -23,7 +23,7 @@ else
   echo "Joining Zero Tier Network..."
   sudo zerotier-cli join $ZEROTIER_NETWORK
 
-  echo "Converting gpspipe output into KML format..."
+  echo "Converting gpspipe output into KML and CSV formats..."
   sudo gpsbabel -i nmea -f /home/pi/gpspipe/output.nmea -o kml -F /home/pi/gpspipe/output.kml
   sudo gpsbabel -t -i nmea -f /home/pi/gpspipe/output.nmea -o unicsv -F /home/pi/gpspipe/output.csv
 
