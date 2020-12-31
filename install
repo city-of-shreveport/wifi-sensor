@@ -20,11 +20,13 @@ wget -O - https://www.kismetwireless.net/repos/kismet-release.gpg.key | sudo apt
 sudo apt update
 sudo apt install nano vim parallel -y
 sudo apt install kismet sqlite3 uuid-runtime -y
-sudo mkdir ~/kismet
 
 echo "Installing gpsd"
 sudo apt install gpsd -y
 sudo systemctl enable gpsd
+
+echo "Making directory for kismet logs"
+sudo mkdir -p /home/pi/kismet
 
 echo "Copying kismet files into /etc/kismet/..."
 sudo mkdir -p /etc/kismet/
