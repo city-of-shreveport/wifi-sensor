@@ -22,11 +22,12 @@ sudo apt install nano vim parallel -y
 sudo apt install kismet sqlite3 uuid-runtime -y
 
 echo "Installing gpsd"
-sudo apt install gpsd -y
+sudo apt install gpsd gpsd-clients python-gps gpsbabel -y
 sudo systemctl enable gpsd
 
-echo "Making directory for kismet logs and zipped logs"
+echo "Making directories for kismet, gpspipe and zipped logs..."
 sudo mkdir -p /home/pi/kismet
+sudo mkdir -p /home/pi/gpspipe
 sudo mkdir -p /home/pi/zipped
 
 echo "Copying kismet files into /etc/kismet/..."

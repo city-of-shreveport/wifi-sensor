@@ -23,15 +23,21 @@ else
   echo "Joining Zero Tier Network..."
   sudo zerotier-cli join $ZEROTIER_NETWORK
 
-  echo "Zipping all wifi data..."
+  echo "Converting gpspipe output into KML format..."
+  sudo gpsbabel -i nmea -f /home/pi/gpspipe/output.nmea -o kml -F /home/pi/gpspipe/output.kml
+
+  echo "Zipping all data..."
   filename=$(date '+%Y-%m-%d-%s')
-  sudo tar -zcvf "/home/pi/zipped/$filename-$HOSTNAME.tar.gz" /home/pi/kismet
+  sudo tar -zcvf "/home/pi/zipped/$filename-$HOSTNAME-kismet.tar.gz" /home/pi/kismet
+  sudo tar -zcvf "/home/pi/zipped/$filename-$HOSTNAME-gpspipe.tar.gz" /home/pi/gpspipe
 
   echo "Removing original data..."
   sudo rm /home/pi/kismet/*
+  sudo rm /home/pi/gpspipe/*
 
   echo "Attempting to upload..."
-  echo "$SCP_USER@$SCP_SERVER:$SCP_DIRECTORY" | parallel -t --retries 5 --delay 30 sudo -u pi scp "/home/pi/zipped/$filename-$HOSTNAME.tar.gz" 
+  echo "$SCP_USER@$SCP_SERVER:$SCP_DIRECTORY" | parallel -t --retries 5 --delay 30 sudo -u pi scp "/home/pi/zipped/$filename-$HOSTNAME-kismet.tar.gz" 
+  echo "$SCP_USER@$SCP_SERVER:$SCP_DIRECTORY" | parallel -t --retries 5 --delay 30 sudo -u pi scp "/home/pi/zipped/$filename-$HOSTNAME-gpspipe.tar.gz" 
 
   echo "Upload script completed. Uploaded file: $filename-$HOSTNAME"
   
@@ -51,6 +57,9 @@ else
 
   echo "Starting Kismet service..."
   sudo service kismet start
+  
+  echo "Starting gpspipe in the background..."
+  sudo gpspipe -r -o /home/pi/gpspipe/output.nmea
 
   echo "Scanning..."
 fi
