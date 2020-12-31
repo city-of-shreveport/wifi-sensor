@@ -1,0 +1,13 @@
+#!/bin/bash
+
+echo "Stopping sensor service..."
+sudo service sensor stop
+
+echo "Stopping kismet service..."
+sudo service kismet stop
+
+echo "Disabling mon0 interface..."
+sudo ifconfig mon0 down
+
+echo "Enabling wlan0 interface..."
+sudo ifconfig wlan0 up
