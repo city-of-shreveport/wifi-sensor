@@ -25,6 +25,7 @@ else
 
   echo "Converting gpspipe output into KML format..."
   sudo gpsbabel -i nmea -f /home/pi/gpspipe/output.nmea -o kml -F /home/pi/gpspipe/output.kml
+  sudo gpsbabel -t -i nmea -f /home/pi/gpspipe/output.nmea -o unicsv -F /home/pi/gpspipe/output.csv
 
   echo "Zipping all data..."
   filename=$(date '+%Y-%m-%d-%s')
