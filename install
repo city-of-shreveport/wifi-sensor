@@ -25,8 +25,9 @@ echo "Installing gpsd"
 sudo apt install gpsd -y
 sudo systemctl enable gpsd
 
-echo "Making directory for kismet logs"
+echo "Making directory for kismet logs and zipped logs"
 sudo mkdir -p /home/pi/kismet
+sudo mkdir -p /home/pi/zipped
 
 echo "Copying kismet files into /etc/kismet/..."
 sudo mkdir -p /etc/kismet/
