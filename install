@@ -15,10 +15,15 @@ sudo cp sources.list.d/raspi.list /etc/apt/sources.list.d/raspi.list
 sudo cp sources.list.d/re4son.list /etc/apt/sources.list.d/re4son.list
 sudo cp sources.list.d/zerotier.list /etc/apt/sources.list.d/zerotier.list
 
-echo "Installing Kismet, SQLite3, and UUIDgen..."
+echo "Installing Nano, VIM, Kismet, SQLite3, and UUIDgen..."
 wget -O - https://www.kismetwireless.net/repos/kismet-release.gpg.key | sudo apt-key add -
 sudo apt update
-sudo apt install kismet sqlite3 uuid-runtime
+sudo apt install nano vim -y
+sudo apt install kismet sqlite3 uuid-runtime -y
+
+echo "Installing gpsd"
+sudo apt install gpsd -y
+sudo systemctl enable gpsd
 
 echo "Copying kismet files into /etc/kismet/..."
 sudo mkdir -p /etc/kismet/
@@ -33,8 +38,8 @@ sudo systemctl enable sensor.service
 
 echo "Installing re4son kernel..."
 wget -O - https://re4son-kernel.com/keys/http/archive-key.asc | sudo apt-key add -
-sudo apt update
-sudo apt upgrade
+sudo apt update -y
+sudo apt upgrade -y
 sudo apt install -y \
   kalipi-kernel kalipi-bootloader kalipi-re4son-firmware \
   kalipi-kernel-headers libraspberrypi0 libraspberrypi-dev \

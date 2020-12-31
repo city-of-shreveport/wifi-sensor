@@ -29,6 +29,7 @@ In our configuration of this repository, we log ONLY the SSIDs of Access Points.
 
 # Installation
 
+0. run sudo apt install git
 1. Clone the repo: `git clone https://github.com/city-of-shreveport/wifi-sensor.git`
 2. Create a file named `env` in the root of this repo using the env.sample as a reference and fill in your details.
 3. Run the `install` script and select the default option for any post-install prompts.
