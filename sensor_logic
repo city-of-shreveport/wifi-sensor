@@ -21,14 +21,14 @@ if [ "$MYHOSTNAME" = "raspberrypi" ]; then
   reboot
 else
   echo "Joining Zero Tier Network..."
-  zerotier-cli join $ZEROTIER_NETWORK
+  sudo zerotier-cli join $ZEROTIER_NETWORK
 
   echo "Zipping all wifi data..."
   filename=$(date '+%Y-%m-%d-%s')
-  tar -zcvf "/home/pi/zipped/$filename-$HOSTNAME.tar.gz" /home/pi/kismet
+  sudo tar -zcvf "/home/pi/zipped/$filename-$HOSTNAME.tar.gz" /home/pi/kismet
 
   echo "Removing original data..."
-  rm /home/pi/kismet/*
+  sudo rm /home/pi/kismet/*
 
   echo "Attempting to upload..."
   echo "$SCP_USER@$SCP_SERVER:$SCP_DIRECTORY" | parallel -t --retries 5 --delay 30 sudo -u pi scp "/home/pi/zipped/$filename-$HOSTNAME.tar.gz" 
