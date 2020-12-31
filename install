@@ -15,10 +15,10 @@ sudo cp sources.list.d/raspi.list /etc/apt/sources.list.d/raspi.list
 sudo cp sources.list.d/re4son.list /etc/apt/sources.list.d/re4son.list
 sudo cp sources.list.d/zerotier.list /etc/apt/sources.list.d/zerotier.list
 
-echo "Installing Nano, VIM, Kismet, SQLite3, and UUIDgen..."
+echo "Installing Nano, VIM, Parallel, Kismet, SQLite3, and UUIDgen..."
 wget -O - https://www.kismetwireless.net/repos/kismet-release.gpg.key | sudo apt-key add -
 sudo apt update
-sudo apt install nano vim -y
+sudo apt install nano vim parallel -y
 sudo apt install kismet sqlite3 uuid-runtime -y
 
 echo "Installing gpsd"
