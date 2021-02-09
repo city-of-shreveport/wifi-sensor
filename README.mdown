@@ -23,7 +23,8 @@ In our configuration of this repository, we log ONLY the SSIDs of Access Points.
 # Prerequisites
 
 * SCP server backend.
-* Pi 3B+ / Pi 4 flashed with Raspberry Pi OS Lite.
+* Pi Zero flashed with Raspberry Pi OS Lite.
+* GPS device installed on the Pi Zero Serial Port.
 * Internet access on the Pi that will be performing the installation.
 * ZeroTier Account.
 * Minimal technical knowledge on Linux systems.
