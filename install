@@ -25,6 +25,9 @@ echo "Installing gpsd"
 sudo apt install gpsd gpsd-clients python-gps gpsbabel -y
 sudo systemctl enable gpsd
 
+echo "Copying gpsd config file..."
+sudo cp gpsd /etc/default/gpsd
+
 echo "Making directories for kismet, gpspipe and zipped logs..."
 sudo mkdir -p /home/pi/kismet
 sudo mkdir -p /home/pi/gpspipe
